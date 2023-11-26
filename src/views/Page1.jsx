@@ -30,7 +30,17 @@ const Page1 = () => {
   const handleFileChange = (event) => {
     setFiles([...event.target.files]);
   };
+  const handleDragOver = (e) => {
+    e.preventDefault(); // Prevent default behavior
+  };
 
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const newFiles = e.dataTransfer.files;
+    if (newFiles.length) {
+      setFiles([...newFiles]);
+    }
+  };
   const handleUpload = async () => {
     if (files.length > 0 && db) {
       const generatedToken = Math.random().toString(36).substr(2, 9);
@@ -131,6 +141,10 @@ const Page1 = () => {
             {/* {showUploadSection ? ( */}
             <div className=''>
               <div className="border-dashed border-2 border-gray-400 py-14 flex flex-col justify-center items-center h-36" >
+              <div 
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
                 <p className="mb-3 font-semibold text-gray-900 flex flex-wrap justify-center">
                   <span>Drag and drop your</span>&nbsp;<span>file anywhere or</span>
                 </p>
@@ -144,6 +158,7 @@ const Page1 = () => {
                 <button id="button" className="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none" onClick={() => document.getElementById('hidden-input').click()}>
                   Upload files
                 </button>
+                </div>
               </div>
   
               <h1 className="pt-6 pb-3 font-semibold sm:text-md text-gray-900">
