@@ -22,78 +22,14 @@ const Page1 = () => {
   const [inputToken, setInputToken] = useState('');
   const [db, setDb] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  
 
   useEffect(() => {
     initDB().then(setDb);
   }, []);
 
-
-  // Function to generate a random alphanumeric string of a given length
-// function generateRandomString(length) {
-//   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-//   let randomString = '';
-//   for (let i = 0; i < length; i++) {
-//     const randomIndex = Math.floor(Math.random() * characters.length);
-//     randomString += characters.charAt(randomIndex);
-//   }
-//   return randomString;
-// }
-
-// Function to hash a string using SHA-256 (or any other hash function)
-// function hashString(input) {
-//   const encoder = new TextEncoder();
-//   const data = encoder.encode(input);
-//   return window.crypto.subtle.digest('SHA-256', data).then(arrayBuffer => {
-//     const hashArray = Array.from(new Uint8Array(arrayBuffer));
-//     return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-//   });
-// }
-
-
-// const handleFileChange = (event) => {
-//   const uploadedFiles = event.target.files;
-//   if (uploadedFiles.length > 0) {
-//       setFiles(Array.from(uploadedFiles));
-//   }
-// };
-
-const handleFileChange = (event) => {
-  setFiles([...event.target.files]);
-};
-
-
-
-  // async function generateRandomToken() {
-  //   const randomString = generateRandomString(16);
-  //   const hashedToken = await hashString(randomString);
-  //   setToken(hashedToken);
-  //   setShowPopup(true);
-  // }
-
-
-//   async function generateRandomToken() {
-//     const fileNames = files.map((file) => file.name).join(',');
-//     const hashedToken = await hashString(fileNames);
-//     setToken(hashedToken);
-//     setShowPopup(true);
-// }
-
-
-  const handleCopyToClipboard = () => {
-    // Copy the token to the clipboard
-    navigator.clipboard.writeText(token);
+  const handleFileChange = (event) => {
+    setFiles([...event.target.files]);
   };
-
-
-  // const handleUpload = () => {
-    
-  //   console.log('File to upload:', files);
-  //   generateRandomToken();
-  //   alert('File uploaded successfully');
-  //   setFiles([]); 
-    
-  // };
 
   const handleUpload = async () => {
     if (files.length > 0 && db) {
@@ -107,8 +43,17 @@ const handleFileChange = (event) => {
         files.forEach(file => {
           db.delete(STORE_NAME, generatedToken + file.name);
         });
-      }, 15 * 60 * 1000); 
+      }, 15 * 60 * 1000); // Token expires after 15 minutes
     }
+  };
+
+  const handleCopyToClipboard = () => {
+    navigator.clipboard.writeText(token);
+  };
+
+  const handleCancel = () => {
+    setFiles([]);
+    setToken('');
   };
 
   const handleTokenChange = (event) => {
@@ -120,29 +65,25 @@ const handleFileChange = (event) => {
     if (db) {
       const fileKeys = await db.getAllKeys(STORE_NAME);
       const matchedFiles = fileKeys.filter(key => key.startsWith(inputToken));
-      setUploadedFiles(matchedFiles);
+      const filesToDisplay = await Promise.all(
+        matchedFiles.map(key => db.get(STORE_NAME, key))
+      );
+      setUploadedFiles(filesToDisplay.map((file, index) => ({
+        file: file,
+        fileName: matchedFiles[index].substring(inputToken.length)
+      })));
     }
   };
+  
 
-  const viewFile = async (fileKey) => {
-    const db = await openDB(DB_NAME, 1);
-    const file = await db.get(STORE_NAME, fileKey);
+  const viewFile = (file) => {
     const url = URL.createObjectURL(file);
     window.open(url, '_blank');
   };
 
-
-
-  const handleCancel = () => {
-    setFiles([]);
-    setToken('');
-  };
-
   const handleClosePopup = () => {
     setShowPopup(false);
-    // setToken('');
   };
-
 
     return (
       <div className='h-screen w-full overflow-hidden bg-[#E5F6FF] flex items-center justify-center'>
@@ -161,6 +102,8 @@ const handleFileChange = (event) => {
                 <input
                   type="token"
                   className="peer h-full w-full rounded-sm border border-blue-gray-200 bg-transparent px-3 py-2.5 pr-20 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                  value={inputToken}
+                  onChange={handleTokenChange}
                   placeholder=" "
                   required
                 />
@@ -170,11 +113,17 @@ const handleFileChange = (event) => {
 
                 <button
                   className="!absolute right-1 top-1 z-10 select-none rounded-sm bg-blue-700 py-2 px-4 text-center align-middle font-sans text-xs font-semibold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 hover:bg-blue-500 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none peer-placeholder-shown:pointer-events-none peer-placeholder-shown:bg-blue-gray-500 peer-placeholder-shown:opacity-50 peer-placeholder-shown:shadow-none"
-                  type="button"
                   data-ripple-light="true" type="submit">
                   Access
                 </button>
-
+                <div className="uploaded-files-list">
+                  {uploadedFiles.map(({ file, fileName }) => (
+                    <div key={fileName}>
+                      {fileName} 
+                      <button onClick={() => viewFile(file)}>View</button>
+                    </div>
+                  ))}
+                </div>
                 </form>
               </div>
             </div>
