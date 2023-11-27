@@ -96,36 +96,66 @@ const Page1 = () => {
   };
 
     return (
-      <div className='h-screen w-full overflow-hidden bg-[#E5F6FF] flex items-center justify-center'>
+      // overflow-hidden
+      <div className='h-screen w-full  bg-[#E5F6FF] flex items-center justify-center'>
         <div className='flex flex-col text-[#3056D3] mt-8 w-2/5 h-2/3 items-center justify-center'>
           <div className='text-5xl font-bold text-center mb-5'>
             FileShare
           </div>
   
           <div className="container mx-auto max-w-screen-lg relative flex flex-col bg-white shadow-xl rounded-md p-8">
-            <div className='h-full overflow-auto p-8 w-full flex flex-col justify-center items-center mb-5'>
+            <div className='h-full overflow-auto p-8 w-full flex flex-col justify-center items-center mb-3 '>
               <div className='text-md font-semibold mb-3'>
                 Access video by entering token
               </div>
-              <div className="relative flex h-10 w-full min-w-[200px] max-w-[24rem]" >
-                <form onSubmit={handleSubmit}>
+              {/* <form className="relative flex h-12 w-full min-w-[200px] max-w-[24rem] items-center place-items-center" onSubmit={handleSubmit}>
+               
+                <button
+                  className="!absolute right-1 z-10 mr-2 select-none rounded-sm bg-blue-700 py-2 px-4 text-center align-middle font-sans text-xs font-semibold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 hover:bg-blue-500 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none peer-placeholder-shown:pointer-events-none peer-placeholder-shown:bg-blue-gray-500 peer-placeholder-shown:opacity-50 peer-placeholder-shown:shadow-none"
+                  data-ripple-light="true" type="submit">
+                  Access
+                </button>
+   
+
+
                 <input
                   type="token"
-                  className="peer h-full w-full rounded-sm border border-blue-gray-200 bg-transparent px-3 py-2.5 pr-20 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                  className="peer h-full w-full rounded-sm border border-blue-gray-200 bg-transparent px-3 py-2.5 pr-20 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 focus:border-2 focus:border-blue-700  "
                   value={inputToken}
                   onChange={handleTokenChange}
                   placeholder=" "
                   required
                 />
-                <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[12px]  font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-blue-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-blue-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+          
+                
+
+                <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[12px]  font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-blue-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-blue-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 ">
                   Token
                 </label>
 
-                <button
-                  className="!absolute right-1 top-1 z-10 select-none rounded-sm bg-blue-700 py-2 px-4 text-center align-middle font-sans text-xs font-semibold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 hover:bg-blue-500 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none peer-placeholder-shown:pointer-events-none peer-placeholder-shown:bg-blue-gray-500 peer-placeholder-shown:opacity-50 peer-placeholder-shown:shadow-none"
-                  data-ripple-light="true" type="submit">
-                  Access
-                </button>
+              </form> */}
+
+            <form class="relative flex h-10 w-full min-w-[200px] max-w-[24rem]  " onSubmit={handleSubmit}>
+              <button
+                class="!absolute right-1 top-1 z-10 select-none rounded bg-blue-700 py-2 px-4 text-center align-middle text-xs font-sans font-semibold  text-white shadow-md shadow-blue-700/20 transition-all hover:shadow-lg hover:shadow-blue-700/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none peer-placeholder-shown:pointer-events-none peer-placeholder-shown:bg-blue-gray-500 peer-placeholder-shown:opacity-50 peer-placeholder-shown:shadow-none"
+                data-ripple-light="true"
+                type="submit"
+              >
+                Access
+              </button>
+              <input
+                type="token"
+                class="peer h-full w-full rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-2.5 pr-20 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                value={inputToken}
+                onChange={handleTokenChange}
+                placeholder=" "
+                required
+              />
+              <label class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-blue-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-blue-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                Token
+              </label>
+            </form>
+
                 <div className="uploaded-files-list">
                   {uploadedFiles.map(({ file, fileName }) => (
                     <div key={fileName}>
@@ -134,18 +164,16 @@ const Page1 = () => {
                     </div>
                   ))}
                 </div>
-                </form>
-              </div>
+              
+
+              
             </div>
   
             {/* {showUploadSection ? ( */}
             <div className=''>
-              <div className="border-dashed border-2 border-gray-400 py-14 flex flex-col justify-center items-center h-36" >
-              <div 
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        >
-                <p className="mb-3 font-semibold text-gray-900 flex flex-wrap justify-center">
+              <div className="border-dashed border-2 border-gray-400 py-14 flex flex-col justify-center items-center h-36" onDragOver={handleDragOver}
+          onDrop={handleDrop}>
+                <p className="mb-3 font-semibold text-gray-900 flex flex-wrap justify-center ">
                   <span>Drag and drop your</span>&nbsp;<span>file anywhere or</span>
                 </p>
                 <input
@@ -153,12 +181,12 @@ const Page1 = () => {
                 type="file"
                 multiple
                 onChange={handleFileChange}
-                className="hidden"
+                className="hidden 
+                "
               />
                 <button id="button" className="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none" onClick={() => document.getElementById('hidden-input').click()}>
-                  Upload files
+                  Choose files
                 </button>
-                </div>
               </div>
   
               <h1 className="pt-6 pb-3 font-semibold sm:text-md text-gray-900">
